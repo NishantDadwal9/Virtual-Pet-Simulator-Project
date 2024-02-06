@@ -1,65 +1,60 @@
 ﻿using System;
-
 class VirtualPet
 {
     public string Type { get; set; }
     public string Name { get; set; }
     public int Hunger { get; set; }
-    public int Happiness { get; set; }
-    public int Health { get; set; }
+    public int MentalHealth { get; set; }
+    public int PhysicalHealth { get; set; }
 
     public VirtualPet(string type, string name)
     {
         Type = type;
         Name = name;
         Hunger = 5;
-        Happiness = 5;
-        Health = 5;
+        MentalHealth = 5;
+        PhysicalHealth = 5;
     }
-
     public void DisplayStatus()
     {
-        Console.WriteLine($"{Name} ({Type}) - Hunger: {Hunger}/10, Happiness: {Happiness}/10, Health: {Health}/10");
+        Console.WriteLine($"{Name} ({Type}) - Hunger: {Hunger}/10, MentalHealth: {MentalHealth}/10, PhysicalHealth: {PhysicalHealth}/10");
     }
-
     public void Feed()
     {
         Hunger = Math.Max(0, Hunger - 2);
-        Health = Math.Min(10, Health + 1);
-        Console.WriteLine($"{Name} just ate. Hunger decreased, health increased.");
+        PhysicalHealth = Math.Min(10, PhysicalHealth + 1);
+        Console.WriteLine($"{Name} just ate. Hunger decreased, PhysicalHealth increased.");
     }
-
     public void Play()
     {
-        Happiness = Math.Min(10, Happiness + 2);
+        MentalHealth = Math.Min(10, MentalHealth + 2);
         Hunger = Math.Min(10, Hunger + 1);
-        Console.WriteLine($"{Name} is having great time while playing. Happiness increased, hunger increased slightly.");
-    }
+        Console.WriteLine($"{Name} is having great time while playing. MentalHealth increased, Hunger increased slightly.");
 
+    }
     public void Rest()
     {
-        Health = Math.Min(10, Health + 2);
-        Happiness = Math.Max(0, Happiness - 1);
-        Console.WriteLine($"{Name} is taking a nap. Health increased, happiness decreased slightly.");
+        PhysicalHealth = Math.Min(10, PhysicalHealth + 2);
+        MentalHealth = Math.Max(0, MentalHealth - 1);
+        Console.WriteLine($"{Name} is taking a nap. PhysicalHealth increased, MentalHealth decreased slightly.");
     }
 
     public void TimePasses()
     {
         Hunger = Math.Min(10, Hunger + 1);
-        Happiness = Math.Max(0, Happiness - 1);
+        MentalHealth = Math.Max(0,  MentalHealth - 1);
 
         if (Hunger >= 8)
         {
             Console.WriteLine($"{Name} is getting hungry. Consider feeding!");
         }
 
-        if (Happiness <= 2)
+        if (MentalHealth <= 2)
         {
-            Console.WriteLine($"{Name} is feeling sad. Play with {Name} to increase happiness!");
+            Console.WriteLine($"{Name} is feeling sad. Play with {Name} to increase MentalHealth!");
         }
     }
 }
-
 class Program
 {
     static void Main()
@@ -90,20 +85,20 @@ class Program
             if (choice == "1")
             {
                 pet.Hunger = Math.Max(0, pet.Hunger - 2);
-                pet.Health = Math.Min(10, pet.Health + 1);
-                Console.WriteLine($"{pet.Name} is fed. Hunger decreased, health increased.");
+                pet.PhysicalHealth = Math.Min(10, pet.PhysicalHealth + 1);
+                Console.WriteLine($"{pet.Name} is fed. Hunger decreased, PhysicaslHealth increased.");
             }
             else if (choice == "2")
             {
-                pet.Happiness = Math.Min(10, pet.Happiness + 2);
+                pet.MentalHealth = Math.Min(10, pet.MentalHealth + 2);
                 pet.Hunger = Math.Min(10, pet.Hunger + 1);
-                Console.WriteLine($"{pet.Name} is playing. Happiness increased, hunger increased slightly.");
+                Console.WriteLine($"{pet.Name} is playing. MentalHealth increased, Hunger increased slightly.");
             }
             else if (choice == "3")
             {
-                pet.Health = Math.Min(10, pet.Health + 2);
-                pet.Happiness = Math.Max(0, pet.Happiness - 1);
-                Console.WriteLine($"{pet.Name} is resting. Health increased, happiness decreased slightly.");
+                pet.PhysicalHealth = Math.Min(10, pet.PhysicalHealth + 2);
+                pet.MentalHealth = Math.Max(0, pet.MentalHealth - 1);
+                Console.WriteLine($"{pet.Name} is resting. PhysicalHealth increased, happiness decreased slightly.");
             }
             else if (choice == "4")
             {
@@ -119,16 +114,15 @@ class Program
                 Console.WriteLine("Invalid choice. Please enter a number between 1 and 5.");
                 continue;
             }
-
             pet.TimePasses();
 
-            if (pet.Hunger >= 10 || pet.Happiness <= 0)
+            if (pet.Hunger >= 10 || pet.MentalHealth <= 0)
             {
                 Console.WriteLine($"{pet.Name} has been neglected and is not doing well. Health is deteriorating!");
-                pet.Health = Math.Max(0, pet.Health - 2);
+                pet.PhysicalHealth = Math.Max(0, pet.PhysicalHealth - 2);
             }
 
-            if (pet.Health <= 0)
+            if (pet.PhysicalHealth <= 0)
             {
                 Console.WriteLine($"{pet.Name} has passed away due to neglect. Game over!");
                 return;
